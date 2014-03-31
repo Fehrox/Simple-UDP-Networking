@@ -25,8 +25,12 @@ namespace UdpLanViews.Views
             NetworkSend.Send(this);
         }
 
-        protected View() {
-            ViewRouting.RegisterView(this);
+        protected View(ushort viewId) {
+            // Only sync derived types.
+            if (this.GetType().IsSubclassOf(typeof(View))) {
+                ViewRouting.RegisterView(this);
+                ViewID = viewId;
+            }
         }
 
         ~View() {
@@ -37,8 +41,14 @@ namespace UdpLanViews.Views
             info.AddValue("ViewID", ViewID, typeof(ushort));
         }
 
+        public abstract void RecieveData(View recievedView);
+
         protected View(SerializationInfo info, StreamingContext context) {
             ViewID = info.GetUInt16("ViewID");
+        }
+
+        public override string ToString() {
+            return ViewID.ToString();
         }
     }
 

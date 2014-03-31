@@ -5,25 +5,30 @@ using UdpLanViews.Views;
 [Serializable]
 public class ViewTester : View, ISerializable
 {
-    public bool TestBool;
     public int TestInt;
     public string TestString;
-    public ViewTester(int testInt, string testString, bool testBool) {
+
+    public ViewTester(ushort viewId, int testInt, string testString)
+        : base(viewId) {
         TestInt = testInt;
         TestString = testString;
-        TestBool = testBool;
     }
 
-    public ViewTester(SerializationInfo info, StreamingContext context) {
+    public ViewTester(SerializationInfo info, StreamingContext context)
+        : base(info, context) {
         TestInt = info.GetInt32("TestInt");
         TestString = info.GetString("TestString");
-        TestBool = info.GetBoolean("TestBool");
-        Console.WriteLine("Synced " + TestInt + " "  + TestString + " " + TestBool);
     }
 
-    public void GetObjectData(SerializationInfo info, StreamingContext context) {
+    new public void GetObjectData(SerializationInfo info, StreamingContext context) {
+        base.GetObjectData(info, context);
         info.AddValue("TestInt", TestInt);
         info.AddValue("TestString", TestString);
-        info.AddValue("TestBool", TestBool);
+    }
+
+    public override void RecieveData(View recievedView) {
+        var resored = recievedView as ViewTester;
+        TestInt = resored.TestInt;
+        TestString = resored.TestString;
     }
 }

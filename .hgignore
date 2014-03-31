@@ -1,6 +1,8 @@
 syntax: glob
 UdpLanViews/bin/
 UdpLanViews/obj/
+Tester/bin/
+Tester/obj/
 UnityPrototyping/Library/
 UnityPrototyping/Temp/
 UnityPrototyping/*.pidb

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UdpLanViews.Views
 {
@@ -8,13 +9,16 @@ namespace UdpLanViews.Views
     /// </summary>
     internal static class ViewRouting
     {
-        private static readonly List<View> Views = new List<Views.View>();
+        private static readonly List<View> Views = new List<View>();
         
         /// <summary>
         /// Sets a local view to recieve routing of network messages to its instance.
         /// </summary>
         /// <param name="view"></param>
-        public static void RegisterView(View view) { Views.Add(view); }
+        public static void RegisterView(View view) { 
+            //if(!Views.Any(v => v.ViewID == view.ViewID)) 
+                Views.Add(view); 
+        }
 
         /// <summary>
         /// Stops a local view from listening for network messages.
@@ -31,7 +35,7 @@ namespace UdpLanViews.Views
                 var targetTypeMatch = Views[i].GetType() == recieved.GetType();
                 var viewIdMatch = Views[i].ViewID == recieved.ViewID;
                 if (targetTypeMatch && viewIdMatch)
-                    Views[i] = recieved;
+                    Views[i].RecieveData(recieved);
             }
         }
     }

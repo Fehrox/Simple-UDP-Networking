@@ -1,31 +1,33 @@
 ﻿using System;
-using UnityEngine;
 using System.Runtime.Serialization;
 using UdpLanViews.Views;
 
 [Serializable]
 public class ViewTester : View, ISerializable
 {
-
-    public bool TestBool;
     public int TestInt;
     public string TestString;
-    public ViewTester(int testInt, string testString, bool testBool) {
+
+    public ViewTester(ushort viewId, int testInt, string testString) : base(viewId){
         TestInt = testInt;
         TestString = testString;
-        TestBool = testBool;
     }
 
-    void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context) {
-        info.AddValue("TestBool", TestBool);
+    public ViewTester(SerializationInfo info, StreamingContext context)
+        : base(info, context) {
+        TestInt = info.GetInt32("TestInt");
+        TestString = info.GetString("TestString");
+    } 
+
+    new public void GetObjectData(SerializationInfo info, StreamingContext context) {
+        base.GetObjectData(info, context);
         info.AddValue("TestInt", TestInt);
         info.AddValue("TestString", TestString);
     }
 
-    public ViewTester(SerializationInfo info, StreamingContext context) {
-        TestBool = info.GetBoolean("TestBool");
-        TestInt = info.GetInt32("TestInt");
-        TestString = info.GetString("TestString");
-        Debug.Log(TestBool + " " + TestInt + " " + TestString + " recieved object");
+    public override void RecieveData(View recievedView) {
+        var resored = recievedView as ViewTester;
+        TestInt = resored.TestInt;
+        TestString = resored.TestString;
     }
 }
