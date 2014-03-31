@@ -1,0 +1,11 @@
+syntax: glob
+UdpLanViews/bin/
+UdpLanViews/obj/
+UnityPrototyping/Library/
+UnityPrototyping/Temp/
+UnityPrototyping/*.pidb
+UnityPrototyping/*.sln
+UnityPrototyping/*.userprefs
+UnityPrototyping/*.csprog
+UnityPrototyping/*.orig
+UnityPrototyping/*.csproj
