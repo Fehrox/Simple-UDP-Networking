@@ -1,0 +1,22 @@
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\bin\Debug\Tester.exe.config
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\bin\Debug\Tester.exe
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\bin\Debug\Tester.pdb
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\obj\Debug\Tester.csprojResolveAssemblyReference.cache
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\obj\Debug\Tester.exe
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\obj\Debug\Tester.pdb
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\bin\Debug\ArcadeNetworking.dll
+D:\Projects\GC3 Admin\ArcadeNetworking\Tester\bin\Debug\ArcadeNetworking.pdb
+D:\Projects\ArcadeNetworking\Tester\obj\Debug\Tester.csprojResolveAssemblyReference.cache
+D:\Projects\ArcadeNetworking\Tester\bin\Debug\Tester.exe.config
+D:\Projects\ArcadeNetworking\Tester\bin\Debug\Tester.exe
+D:\Projects\ArcadeNetworking\Tester\bin\Debug\Tester.pdb
+D:\Projects\ArcadeNetworking\Tester\obj\Debug\Tester.exe
+D:\Projects\ArcadeNetworking\Tester\obj\Debug\Tester.pdb
+D:\Projects\ArcadeNetworking\Tester\bin\Debug\UdpLanViews.dll
+D:\Projects\ArcadeNetworking\Tester\bin\Debug\UdpLanViews.pdb
+D:\Projects\UdpLanViews\Tester\bin\Debug\Tester.exe.config
+D:\Projects\UdpLanViews\Tester\obj\Debug\Tester.exe
+D:\Projects\UdpLanViews\Tester\obj\Debug\Tester.pdb
+D:\Projects\UdpLanViews_\Tester\bin\Debug\Tester.exe.config
+D:\Projects\UdpLanViews_\Tester\obj\Debug\Tester.exe
+D:\Projects\UdpLanViews_\Tester\obj\Debug\Tester.pdb
