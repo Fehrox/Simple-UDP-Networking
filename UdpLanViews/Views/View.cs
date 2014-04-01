@@ -17,6 +17,14 @@ namespace UdpLanViews.Views
         /// </summary>
         public ushort ViewID = 0;
 
+        protected View() {
+            RegesterView(0);
+        }
+
+        protected View(ushort viewId) {
+            RegesterView(viewId);
+        }
+
         /// <summary>
         /// Syncronise this instance of the parent of this derived 
         /// View with other view instances on the network.
@@ -25,8 +33,12 @@ namespace UdpLanViews.Views
             NetworkSend.Send(this);
         }
 
-        protected View() { }
-        protected View(ushort viewId) {
+        /// <summary>
+        /// Subscribes this, and derived classes to information
+        /// routed over the network.
+        /// </summary>
+        /// <param name="viewId"></param>
+        private void RegesterView(ushort viewId) {
             // Only sync derived types.
             if (this.GetType().IsSubclassOf(typeof(View))) {
                 ViewRouting.RegisterView(this);
