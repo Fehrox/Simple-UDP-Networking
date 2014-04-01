@@ -34,9 +34,16 @@ namespace UdpLanViews.Network
             _client.BeginReceive(DataRecieved, null);
         }
 
+        /// <summary>
+        /// Close underlying udp connection.
+        /// </summary>
+        public void Close() {
+            _client.Close();
+        }
+
         // Unbind from port.
         ~NetworkRecieve() {
-            _client.Close();
+            Close();
         }
 
         /// <summary>
