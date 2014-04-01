@@ -20,3 +20,4 @@ D:\Projects\UdpLanViews\Tester\obj\Debug\Tester.pdb
 D:\Projects\UdpLanViews_\Tester\bin\Debug\Tester.exe.config
 D:\Projects\UdpLanViews_\Tester\obj\Debug\Tester.exe
 D:\Projects\UdpLanViews_\Tester\obj\Debug\Tester.pdb
+D:\Projects\UdpNetworking\Tester\bin\Debug\Tester.exe.config

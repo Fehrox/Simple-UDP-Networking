@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{86253D6D-7823-49E8-819C-E5C1415F19D5}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{DF0A9F75-8464-43E9-83B0-8285F12D0437}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tester</RootNamespace>
-    <AssemblyName>Tester</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>UdpNetworking</RootNamespace>
+    <AssemblyName>UdpNetworking</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,22 +39,35 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files (x86)\Unity\Editor4.0.1\Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Messaging\IMessageContract.cs" />
+    <Compile Include="Network\Network.cs" />
+    <Compile Include="Messaging\XMLMessageContract.cs" />
+    <Compile Include="Network\NetworkRecieve.cs" />
+    <Compile Include="Network\NetworkSend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewTester.cs" />
+    <Compile Include="Messaging\BinaryFormatterMessageContract.cs" />
+    <Compile Include="Session\Session.cs" />
+    <Compile Include="Session\SessionAnnouncer.cs" />
+    <Compile Include="Session\SessionAnnouncment.cs" />
+    <Compile Include="Session\SessionFinder.cs" />
+    <Compile Include="Views\View.cs" />
+    <Compile Include="Views\ViewRouting.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UdpNetworking\UdpNetworking.csproj">
-      <Project>{df0a9f75-8464-43e9-83b0-8285f12d0437}</Project>
-      <Name>UdpLanViews</Name>
-    </ProjectReference>
+    <None Include="Session\SessionCodeMap.dgml" />
+    <None Include="UdpNetworkCodeMap.dgml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)UnityPrototyping\Assets\$(ProjectName).dll"
+copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)UnityPrototyping\Assets\$(ProjectName).pdb"
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

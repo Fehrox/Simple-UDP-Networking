@@ -8,7 +8,8 @@ public class ViewTester : View, ISerializable
     public int TestInt;
     public string TestString;
 
-    public ViewTester(ushort viewId, int testInt, string testString) : base(viewId){
+    public ViewTester(ushort viewId, int testInt, string testString)
+        : base(viewId) {
         TestInt = testInt;
         TestString = testString;
     }
@@ -17,7 +18,7 @@ public class ViewTester : View, ISerializable
         : base(info, context) {
         TestInt = info.GetInt32("TestInt");
         TestString = info.GetString("TestString");
-    } 
+    }
 
     new public void GetObjectData(SerializationInfo info, StreamingContext context) {
         base.GetObjectData(info, context);
