@@ -11,3 +11,4 @@ UnityPrototyping/*.userprefs
 UnityPrototyping/*.csprog
 UnityPrototyping/*.orig
 UnityPrototyping/*.csproj
+UnityPrototyping/obj/
