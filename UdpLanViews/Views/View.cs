@@ -21,10 +21,11 @@ namespace UdpLanViews.Views
         /// Syncronise this instance of the parent of this derived 
         /// View with other view instances on the network.
         /// </summary>
-        public void ServerAssert() {
+        public void Sync() {
             NetworkSend.Send(this);
         }
 
+        protected View() { }
         protected View(ushort viewId) {
             // Only sync derived types.
             if (this.GetType().IsSubclassOf(typeof(View))) {
