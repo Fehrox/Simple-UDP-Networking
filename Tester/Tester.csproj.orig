@@ -52,7 +52,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UdpNetworking\UdpNetworking.csproj">
       <Project>{df0a9f75-8464-43e9-83b0-8285f12d0437}</Project>
-      <Name>UdpLanViews</Name>
+      <Name>UdpNetworking</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

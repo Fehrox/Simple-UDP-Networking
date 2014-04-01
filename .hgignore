@@ -1,6 +1,6 @@
 syntax: glob
-UdpLanViews/bin/
-UdpLanViews/obj/
+UdpNetworking/bin/
+UdpNetworking/obj/
 Tester/bin/
 Tester/obj/
 UnityPrototyping/Library/
