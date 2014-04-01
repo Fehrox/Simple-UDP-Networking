@@ -31,6 +31,14 @@ namespace UdpLanViews.Network{
             _sender = new NetworkSend(_client, _contract, LISTEN_PORT, sender);
         }
 
+        public static void StopListening() {
+            _reciever.Close();
+            _client = null;
+            _contract = null;
+            _reciever = null;
+            _sender = null;
+        }
+
     }
 
 }
