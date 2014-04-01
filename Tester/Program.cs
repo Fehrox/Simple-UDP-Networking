@@ -6,8 +6,8 @@ namespace Tester
     
     class Program
     {
-        static ViewTester viewTesterOne = new ViewTester(1, "One", true);
-        static ViewTester viewTesterTwo = new ViewTester(2, "Two", false);
+        static ViewTester viewTesterOne = new ViewTester(1, 1, "One");
+        static ViewTester viewTesterTwo = new ViewTester(2, 1, "Two");
         static void Main(string[] args) {
             Network.Listen();
             viewTesterOne.ViewID = 1;
@@ -17,8 +17,8 @@ namespace Tester
                 Console.ReadKey();
                 viewTesterOne.TestInt++;
                 viewTesterTwo.TestInt++;
-                viewTesterOne.ServerAssert();
-                viewTesterTwo.ServerAssert();
+                viewTesterOne.Sync();
+                viewTesterTwo.Sync();
             }
         }
     }
