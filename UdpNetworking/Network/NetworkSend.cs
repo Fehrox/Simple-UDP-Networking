@@ -11,7 +11,7 @@ namespace UdpNetworking.Network
     class NetworkSend
     {
         private static IPEndPoint _server;
-        private static UdpClient _client;
+        private static INetworkClient _client;
         private static IMessageContract _contract;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace UdpNetworking.Network
         /// <param name="contract"> </param>
         /// <param name="port"></param>
         /// <param name="server"></param>
-        public NetworkSend(UdpClient client, IMessageContract contract, short port, IPAddress server = null) {
+        public NetworkSend(INetworkClient client, IMessageContract contract, short port, IPAddress server = null) {
             // If no server is provided, assume we are server.
             _server = new IPEndPoint(server ?? IPAddress.Broadcast, port);
             _client = client;
