@@ -1,34 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using UdpNetworking.Network;
 
 namespace UdpNetworking.Client
 {
     class UdpNetworkClient : INetworkClient
     {
-        private UdpClient _client;
+        protected UdpClient Client;
+        private readonly int _port;
 
         public UdpNetworkClient(int port) {
-            _client = new UdpClient(port);
+            Client = new UdpClient(port);
+            _port = port;
         }
 
-        public void Send(byte[] data, int dataLength, System.Net.IPEndPoint reciever) {
-            _client.Send(data, dataLength, reciever);
+        /// <summary>
+        /// Send data through client over the network.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="dataLength"></param>
+        /// <param name="reciever"></param>
+        public void Send(byte[] data, int dataLength, IPEndPoint reciever) {
+            Client.Send(data, dataLength, reciever);
         }
 
-        public void BeginReceive(AsyncCallback requestCallback) {
-            _client.BeginReceive(requestCallback, null);
+        /// <summary>
+        /// Recieve data, and direct response to given callback.
+        /// </summary>
+        /// <param name="requestCallback">Method to invoked when message recieved.</param>
+        public virtual void BeginRecieve(AsyncByteCallback requestCallback) {
+            Client.BeginReceive(result => ProcessRecieve(requestCallback, result), null);
         }
 
+        /// <summary>
+        /// Extracts the bytes from the UDP response and invokes the callback.
+        /// </summary>
+        /// <param name="requestCallback"></param>
+        /// <param name="result"></param>
+        public void ProcessRecieve(AsyncByteCallback requestCallback, IAsyncResult result) {
+            var sender = new IPEndPoint(IPAddress.Any, _port);
+            var recievedBytes = Client.EndReceive(result, ref sender);
+            requestCallback.Invoke(recievedBytes);
+        }
+
+        /// <summary>
+        /// Close the client connection.
+        /// </summary>
         public void Close() {
-            _client.Close();
+            Client.Close();
         }
 
-        public byte[] EndReceive(IAsyncResult result, ref System.Net.IPEndPoint sender) {
-            return _client.EndReceive(result, ref sender);
+        ~UdpNetworkClient() {
+            Client.Close();
         }
+
+        // Explicitly define this class in order to extract Endpoint from sender.
+        /// <summary>
+        /// Represents the UdpState at time of transmission.
+        /// </summary>
+        public class UdpState {
+            public IPEndPoint EndPoint;
+            public UdpClient Client;
+        }
+
     }
 }

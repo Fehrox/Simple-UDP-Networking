@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using UdpLanViews.Views;
+using UdpNetworking.Views;
 
 [Serializable]
 public class ViewTester : View, ISerializable

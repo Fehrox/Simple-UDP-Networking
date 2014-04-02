@@ -52,17 +52,14 @@ namespace UdpNetworking.Network
         /// Reads in network data as it becomes available.
         /// </summary>
         /// <param name="result"></param>
-        private void DataRecieved(IAsyncResult result) {
-
-            // Recieve any pending network messages.
-            var viewBytes = _client.EndReceive(result, ref _sender);
+        private void DataRecieved(byte[] viewBytes) {
 
             // Recieve next transmitted data.
-            _client.BeginReceive(DataRecieved, null);
+            _client.BeginRecieve(DataRecieved);
 
             // Don't route our own messages. 
             var loopBack = _sender.Address.Equals(_localAddress);
-            if (loopBack) return;
+            //if (loopBack) return;
 
             // Restore and process the sent message.
             var restoredView = _contract.UnpackForRecieve(viewBytes) as View;
