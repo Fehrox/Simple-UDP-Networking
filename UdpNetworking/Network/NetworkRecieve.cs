@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using UdpNetworking.Client;
 using UdpNetworking.Messaging;
 using UdpNetworking.Views;
 
@@ -16,7 +17,7 @@ namespace UdpNetworking.Network
  
         // Address from which to recieve data.
         private IPEndPoint _sender;
-        private UdpClient _client;
+        private INetworkClient _client;
         private IMessageContract _contract;
 
         private readonly IPAddress _localAddress;
@@ -24,14 +25,14 @@ namespace UdpNetworking.Network
         /// <summary>
         /// Begins listening for Network communications.
         /// </summary>
-        public NetworkRecieve(UdpClient client,  IMessageContract contract, IPAddress sender, short port) {
+        public NetworkRecieve(INetworkClient client, IMessageContract contract, IPAddress sender, short port) {
             _sender = new IPEndPoint(sender ?? IPAddress.Broadcast, port);
             _client = client;
             _localAddress = GetLocalIp();
             _contract = contract;
 
             //TODO: Investigate UDPState.
-            _client.BeginReceive(DataRecieved, null);
+            _client.BeginRecieve(DataRecieved);
         }
 
         /// <summary>

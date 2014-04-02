@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using UdpNetworking.Client;
 using UdpNetworking.Messaging;
 
 namespace UdpNetworking.Network{
@@ -19,13 +20,14 @@ namespace UdpNetworking.Network{
     public static class Network {
 
         const short LISTEN_PORT = 21044;
-        private static UdpClient _client;
+        private static INetworkClient _client;
         private static IMessageContract _contract;
         private static NetworkRecieve _reciever;
         private static NetworkSend _sender;
 
         public static void Start(IPAddress sender = null) {
-            _client = new UdpClient(LISTEN_PORT);
+            if(_reciever != null) _reciever.Close();
+            _client = new UdpNetworkClient(LISTEN_PORT);
             _contract = new BinaryFormatterMessageContract();
             _reciever = new NetworkRecieve(_client, _contract, sender, LISTEN_PORT);
             _sender = new NetworkSend(_client, _contract, LISTEN_PORT, sender);
