@@ -21,3 +21,10 @@ D:\Projects\UdpLanViews_\Tester\bin\Debug\Tester.exe.config
 D:\Projects\UdpLanViews_\Tester\obj\Debug\Tester.exe
 D:\Projects\UdpLanViews_\Tester\obj\Debug\Tester.pdb
 D:\Projects\UdpNetworking\Tester\bin\Debug\Tester.exe.config
+D:\Projects\UdpNetworking\Tester\obj\Debug\Tester.csprojResolveAssemblyReference.cache
+D:\Projects\UdpNetworking\Tester\bin\Debug\Tester.exe
+D:\Projects\UdpNetworking\Tester\bin\Debug\Tester.pdb
+D:\Projects\UdpNetworking\Tester\bin\Debug\UdpNetworking.dll
+D:\Projects\UdpNetworking\Tester\bin\Debug\UdpNetworking.pdb
+D:\Projects\UdpNetworking\Tester\obj\Debug\Tester.exe
+D:\Projects\UdpNetworking\Tester\obj\Debug\Tester.pdb

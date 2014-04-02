@@ -29,5 +29,6 @@ public class ViewTester : View, ISerializable
         var resored = recievedView as ViewTester;
         TestInt = resored.TestInt;
         TestString = resored.TestString;
+        UnityEngine.Debug.Log("Are we in teh main thread? " + recievedView.ViewID);
     }
 }

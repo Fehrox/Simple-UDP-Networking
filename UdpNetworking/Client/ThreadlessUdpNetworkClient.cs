@@ -18,7 +18,6 @@ namespace UdpNetworking.Client
         public ThreadlessUdpNetworkClient(int port, IThreadProcessor threadProcessor)
             : base(port) {
             _threadProcessor = threadProcessor;
-            _threadProcessor.Start();
         }
 
         /// <summary>

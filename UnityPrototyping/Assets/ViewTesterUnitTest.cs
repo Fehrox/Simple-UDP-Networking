@@ -8,7 +8,8 @@ public class ViewTesterUnitTest : MonoBehaviour {
     ViewTester viewTesterTwo = new ViewTester(2, 1, "DesktopTwo");
 
     void Start() {
-        Network.Start();
+        var mainThreadProcessor = gameObject.AddComponent<MainThreadProcessor>();
+        Network.Start(null, mainThreadProcessor);
         viewTesterOne.TestInt = 1;
         viewTesterOne.TestString = "DesktopOne";
         viewTesterTwo.TestInt = 2;
