@@ -6,7 +6,6 @@ namespace UdpNetworking.Client
     public interface IThreadProcessor {
         Queue<AsyncThreadCallback> Queue { get; set; }
         void Enqueue(AsyncThreadCallback response);
-        void Start();
     }
 
     public struct AsyncThreadCallback{

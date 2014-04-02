@@ -44,9 +44,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\ThreadlessUdpNetworkClient.cs" />
+    <Compile Include="Client\IThreadProcessor.cs" />
+    <Compile Include="Client\UdpNetworkClient.cs" />
     <Compile Include="Messaging\IMessageContract.cs" />
+    <Compile Include="Client\INetworkClient.cs" />
     <Compile Include="Network\Network.cs" />
-    <Compile Include="Messaging\XMLMessageContract.cs" />
     <Compile Include="Network\NetworkRecieve.cs" />
     <Compile Include="Network\NetworkSend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
