@@ -55,14 +55,5 @@ namespace UdpNetworking.Client
             Client.Close();
         }
 
-        // Explicitly define this class in order to extract Endpoint from sender.
-        /// <summary>
-        /// Represents the UdpState at time of transmission.
-        /// </summary>
-        public class UdpState {
-            public IPEndPoint EndPoint;
-            public UdpClient Client;
-        }
-
     }
 }
