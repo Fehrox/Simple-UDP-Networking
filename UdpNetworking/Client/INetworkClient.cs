@@ -6,9 +6,9 @@ using System.Text;
 
 namespace UdpNetworking.Network
 {
+    public delegate void AsyncByteCallback(byte[] resultBytes);
     interface INetworkClient {
-        void BeginReceive(AsyncCallback requestCallback);
-        byte[] EndReceive(IAsyncResult result, ref IPEndPoint sender);
+        void BeginRecieve(AsyncByteCallback requestCallback);
         void Send(byte[] data, int dataLength, IPEndPoint reciever);
         void Close();
     }

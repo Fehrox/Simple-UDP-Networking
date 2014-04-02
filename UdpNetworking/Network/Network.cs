@@ -25,9 +25,11 @@ namespace UdpNetworking.Network{
         private static NetworkRecieve _reciever;
         private static NetworkSend _sender;
 
-        public static void Start(IPAddress sender = null) {
+        public static void Start(IPAddress sender = null, IThreadProcessor threadProcessor = null) {
             if(_reciever != null) _reciever.Close();
-            _client = new UdpNetworkClient(LISTEN_PORT);
+            _client = threadProcessor == null 
+                    ? new UdpNetworkClient(LISTEN_PORT) 
+                    : new ThreadlessUdpNetworkClient(LISTEN_PORT, threadProcessor);
             _contract = new BinaryFormatterMessageContract();
             _reciever = new NetworkRecieve(_client, _contract, sender, LISTEN_PORT);
             _sender = new NetworkSend(_client, _contract, LISTEN_PORT, sender);

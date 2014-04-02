@@ -1,5 +1,6 @@
 ﻿using System;
-using UdpLanViews.Network;
+
+using UdpNetworking.Network;
 
 namespace Tester
 {
@@ -9,7 +10,7 @@ namespace Tester
         static ViewTester viewTesterOne = new ViewTester(1, 1, "One");
         static ViewTester viewTesterTwo = new ViewTester(2, 1, "Two");
         static void Main(string[] args) {
-            Network.Listen();
+            Network.Start();
             viewTesterOne.ViewID = 1;
             viewTesterTwo.ViewID = 2;
             while (true) {
