@@ -5,13 +5,15 @@ using UdpNetworking.Network;
 
 namespace UdpNetworking.Client
 {
-    class UdpNetworkClient : INetworkClient
+    public class UdpNetworkClient : INetworkClient
     {
-        protected UdpClient Client;
         private readonly int _port;
+        private UdpClient _client;
+
+        public UdpNetworkClient() {}
 
         public UdpNetworkClient(int port) {
-            Client = new UdpClient(port);
+            _client = new UdpClient(port);
             _port = port;
         }
 
@@ -22,7 +24,7 @@ namespace UdpNetworking.Client
         /// <param name="dataLength"></param>
         /// <param name="reciever"></param>
         public void Send(byte[] data, int dataLength, IPEndPoint reciever) {
-            Client.Send(data, dataLength, reciever);
+            _client.Send(data, dataLength, reciever);
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace UdpNetworking.Client
         /// </summary>
         /// <param name="requestCallback">Method to invoked when message recieved.</param>
         public virtual void BeginRecieve(AsyncByteCallback requestCallback) {
-            Client.BeginReceive(result => ProcessRecieve(requestCallback, result), null);
+            _client.BeginReceive(result => ProcessRecieve(requestCallback, result), _client);
         }
 
         /// <summary>
@@ -39,8 +41,9 @@ namespace UdpNetworking.Client
         /// <param name="requestCallback"></param>
         /// <param name="result"></param>
         public void ProcessRecieve(AsyncByteCallback requestCallback, IAsyncResult result) {
-            var sender = new IPEndPoint(IPAddress.Any, _port);
-            var recievedBytes = Client.EndReceive(result, ref sender);
+            var sender = new IPEndPoint(IPAddress.Any, 0);
+            var listner = (UdpClient)result.AsyncState;
+            var recievedBytes = listner.Receive(ref sender);
             requestCallback.Invoke(recievedBytes);
         }
 
@@ -48,12 +51,24 @@ namespace UdpNetworking.Client
         /// Close the client connection.
         /// </summary>
         public void Close() {
-            Client.Close();
+            _client.Close();
         }
 
         ~UdpNetworkClient() {
-            Client.Close();
+            _client.Close();
         }
 
+    }
+
+    public class AlreadyConnectedException : Exception {
+        public AlreadyConnectedException() {}
+        public AlreadyConnectedException(string message) : base(message) {}
+        public AlreadyConnectedException(string message, Exception inner) : base(message, inner) {}
+    }
+
+    public class NoConnectionException : Exception{
+        public NoConnectionException() { }
+        public NoConnectionException(string message) : base(message) { }
+        public NoConnectionException(string message, Exception inner) : base(message, inner) { }
     }
 }

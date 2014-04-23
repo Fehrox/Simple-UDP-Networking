@@ -4,6 +4,7 @@ using UdpNetworking.Network;
 namespace UdpNetworking.Client
 {
     public interface IThreadProcessor {
+        IThreadProcessor InterfaceInstance { get; }
         Queue<AsyncThreadCallback> Queue { get; set; }
         void Enqueue(AsyncThreadCallback response);
     }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System;
+using System.Net;
 
 namespace UdpNetworking.Session
 {
     class SessionFinder
     {
-        SessionAnnouncment _announcmentFinder;
+        static SessionAnnouncment _announcmentFinder;
 
-        static Action<int> _onSessionFound;
+        static Action<int, IPAddress> _onSessionFound;
 
         public SessionFinder(ref SessionAnnouncment announcment) {
             _announcmentFinder = announcment;
@@ -18,8 +19,10 @@ namespace UdpNetworking.Session
         /// for a hoast advertising a session.
         /// </summary>
         /// <param name="hostID"></param>
-        internal static void OnFoundSession(int hostID) {
-            _onSessionFound.Invoke(hostID);
+        /// <param name="ip"> </param>
+        internal static void OnFoundSession(int hostID, IPAddress ip) {
+            StopFinding();
+            _onSessionFound.Invoke(hostID, ip);
         }
 
         /// <summary>
@@ -27,15 +30,15 @@ namespace UdpNetworking.Session
         /// Sets up the callback for when session is found.
         /// </summary>
         /// <param name="onSessionFound"></param>
-        internal void Find(Action<int> onSessionFound) {
+        internal void Find(Action<int, IPAddress> onSessionFound) {
             _onSessionFound = onSessionFound;
             // Make sure there is an instance of SessionAnnouncment to recieve.
             _announcmentFinder = new SessionAnnouncment();
         }
 
-        internal void StopFinding() {
+        internal static void StopFinding() {
             //TODO: Impliment a Destroy on the View base calss
-            //throw new NotImplementedException();
+            _announcmentFinder = null;
         }
     }
 }
