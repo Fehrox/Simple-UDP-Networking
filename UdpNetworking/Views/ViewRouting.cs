@@ -18,6 +18,7 @@ namespace UdpNetworking.Views
         public static void RegisterView(View view) { 
             //if(!Views.Any(v => v.ViewID == view.ViewID)) 
                 Views.Add(view); 
+            UnityEngine.Debug.Log(Views.Count);
         }
 
         /// <summary>

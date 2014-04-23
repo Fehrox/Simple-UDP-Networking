@@ -12,3 +12,4 @@ UnityPrototyping/*.csprog
 UnityPrototyping/*.orig
 UnityPrototyping/*.csproj
 UnityPrototyping/obj/
+Build/

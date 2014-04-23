@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.Serialization;
 using UdpNetworking.Network;
 
@@ -16,6 +18,7 @@ namespace UdpNetworking.Views
         /// should be applied to.
         /// </summary>
         public ushort ViewID = 0;
+        public IPAddress SenderAddress;
 
         protected View() {
             RegesterView(0);
@@ -30,7 +33,7 @@ namespace UdpNetworking.Views
         /// View with other view instances on the network.
         /// </summary>
         public void Sync() {
-            NetworkSend.Send(this);
+            Network.Network.Send(this);
         }
 
         /// <summary>
@@ -40,7 +43,7 @@ namespace UdpNetworking.Views
         /// <param name="viewId"></param>
         private void RegesterView(ushort viewId) {
             // Only sync derived types.
-            if (this.GetType().IsSubclassOf(typeof(View))) {
+            if (GetType().IsSubclassOf(typeof(View))) {
                 ViewRouting.RegisterView(this);
                 ViewID = viewId;
             }
@@ -51,13 +54,15 @@ namespace UdpNetworking.Views
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context) {
-            info.AddValue("ViewID", ViewID, typeof(ushort));
+            info.AddValue("ViewID", ViewID);
+            info.AddValue("Address", Network.Network.LanAddress);
         }
 
         public abstract void RecieveData(View recievedView);
 
         protected View(SerializationInfo info, StreamingContext context) {
             ViewID = info.GetUInt16("ViewID");
+            SenderAddress = (IPAddress)info.GetValue("Address", typeof (IPAddress));
         }
 
         public override string ToString() {

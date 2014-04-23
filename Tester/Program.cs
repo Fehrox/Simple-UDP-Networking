@@ -1,6 +1,8 @@
 ﻿using System;
-
+using System.Net;
+using UdpNetworking.Client;
 using UdpNetworking.Network;
+using UdpNetworking.Session;
 
 namespace Tester
 {
@@ -10,7 +12,8 @@ namespace Tester
         static ViewTester viewTesterOne = new ViewTester(1, 1, "One");
         static ViewTester viewTesterTwo = new ViewTester(2, 1, "Two");
         static void Main(string[] args) {
-            Network.Start();
+            //TODO: Impliment console thread processor.
+            Session.Find((i, address) => Network.Connect(address));
             viewTesterOne.ViewID = 1;
             viewTesterTwo.ViewID = 2;
             while (true) {

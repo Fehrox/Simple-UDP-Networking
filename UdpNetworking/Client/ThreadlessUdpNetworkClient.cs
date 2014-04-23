@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UdpNetworking.Network;
+﻿using UdpNetworking.Network;
 
 namespace UdpNetworking.Client
 {
-    class ThreadlessUdpNetworkClient : UdpNetworkClient
+
+    public class ThreadlessUdpNetworkClient : UdpNetworkClient
     {
         private IThreadProcessor _threadProcessor;
+
+        public ThreadlessUdpNetworkClient() {}
 
         /// <summary>
         /// Set up Queuing mechanisms.

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Runtime.Serialization;
-using UdpNetworking.Views;
-using System.Threading;
+﻿using System.Threading;
 
 namespace UdpNetworking.Session
 {
@@ -46,7 +43,7 @@ namespace UdpNetworking.Session
         /// </summary>
         private void Broadcast() {
             _broadcast = true;
-            while (_broadcast) {
+            while (_broadcast ) {
                 _announcer = new SessionAnnouncment(_hostID);
                 _announcer.Announce();
                 // Wait .35 seconds before announcing again.
