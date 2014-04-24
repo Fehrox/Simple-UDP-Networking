@@ -14,7 +14,7 @@ namespace UdpNetworking.Session
         private int _hostID;
 
         // How Often we should broadcase the session.
-        private const int BROADCAST_FREQUENCY = 350;
+        private const int BROADCAST_FREQUENCY = 500;
 
         public SessionAnnouncer(ref SessionAnnouncment _announcment) {
             _announcer = _announcment;
