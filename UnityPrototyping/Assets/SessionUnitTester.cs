@@ -51,11 +51,13 @@ public class SessionUnitTester : MonoBehaviour {
 
     void MatchFound(int networkId, IPAddress sender) {
         Debug.Log("Match found!! " + networkId + " " + sender);
-        if (!Network.Connected) {
+        if (Network.Connected) {
             Session.Stop();
-            Network.Connect(sender);
-            RemoteInvoke.SendMessage("Connected");
+            Network.Disconnect();
         }
+
+        Network.Connect(sender);
+        RemoteInvoke.SendMessage("Connected");
     }
 
     void Connected() {
