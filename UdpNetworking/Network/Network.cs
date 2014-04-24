@@ -61,6 +61,9 @@ namespace UdpNetworking.Network{
             _client = new ThreadlessUdpNetworkClient(PORT, Processor);
             HostAddress = new IPEndPoint(host, PORT);
             _client.BeginRecieve(Recieve);
+#if DEBUG_LOG
+            UnityEngine.Debug.Log("Connected to " + HostAddress);
+#endif
         }
 
         /// <summary>
@@ -101,6 +104,9 @@ namespace UdpNetworking.Network{
                 throw new NoConnectionException("No existing connection to close.");
             _client.Close();
             _client = null;
+#if DEBUG_LOG
+            UnityEngine.Debug.Log("Disconnected from " + HostAddress);
+#endif
         }
 
     }

@@ -23,6 +23,9 @@ namespace UdpNetworking.Session
         internal static void OnFoundSession(int hostID, IPAddress ip) {
             StopFinding();
             _onSessionFound.Invoke(hostID, ip);
+#if DEBUG_LOG
+            UnityEngine.Debug.Log("Found game on " + ip);
+#endif
         }
 
         /// <summary>

@@ -35,6 +35,9 @@ namespace UdpNetworking.Session
             if (_sessionAnnouncer == null)
                 _sessionAnnouncer = new SessionAnnouncer(ref _announcment);
             _sessionAnnouncer.Announce(hostId);
+#if DEBUG_LOG
+            UnityEngine.Debug.Log("Broadcasting with ID " + hostId);
+#endif
         }
 
 

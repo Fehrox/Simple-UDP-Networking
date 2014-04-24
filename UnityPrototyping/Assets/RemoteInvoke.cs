@@ -14,11 +14,11 @@ public class RemoteInvoke : View, ISerializable {
         _instance._methodName = methodName;
         _instance._value = value;
         _instance.Sync();
+        Debug.Log("Invoking " + methodName + " on connected players." );
     }
 
     public RemoteInvoke() {}
     static RemoteInvoke() {
-        Debug.Log("RemoteInvoke()");
         if (_instance == null)
             _instance = new RemoteInvoke();
     }
