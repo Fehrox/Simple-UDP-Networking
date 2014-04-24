@@ -24,32 +24,32 @@ namespace UdpNetworking.Messaging
 
         public object UnpackForRecieve(byte[] bytes) 
         {
-            //try {
+            try {
                 using (var stream = new MemoryStream()) {
                     stream.Write(bytes, 0, bytes.Length);
                     stream.Seek(0, SeekOrigin.Begin);
                     var formatter = new BinaryFormatter { Binder = new LocalAssemblyBinder() };
                     return formatter.Deserialize(stream);
                 }
-            //} catch (Exception e) {
-            //    if (
-            //        //e is FileNotFoundException ||
-            //        //e is SerializationException 
-            //        //e is IndexOutOfRangeException || 
-            //        //e is ArgumentOutOfRangeException ||
-            //        //e is EndOfStreamException
-            //        )
-            //        return null;
-            //    throw;
-            //}
+            } catch (Exception e) {
+                // For data not originating from this project.
+                if (e is FileNotFoundException ||
+                    e is SerializationException ||
+                    e is IndexOutOfRangeException || 
+                    e is ArgumentOutOfRangeException ||
+                    e is EndOfStreamException)
+                    //Return nothing.
+                    return null;
+                throw;
+            }
         }
 
         sealed class LocalAssemblyBinder : SerializationBinder
         {
             public override Type BindToType(string assemblyName, string typeName) {
                 var assemblyStr = Assembly.GetEntryAssembly() == null 
-                                ? "Assembly-CSharp-firstpass" :
-                                Assembly.GetEntryAssembly().FullName;
+                                ? "Assembly-CSharp-firstpass" 
+                                : Assembly.GetEntryAssembly().FullName;
                 var typeStr = String.Format("{0}, {1}", typeName, assemblyStr);
                 //UnityEngine.Debug.Log(assemblyName + " " + typeStr);
                 return Type.GetType(typeStr);
