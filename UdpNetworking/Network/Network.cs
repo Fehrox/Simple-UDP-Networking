@@ -42,12 +42,15 @@ namespace UdpNetworking.Network{
             } set { _processor = value.InterfaceInstance; }
         }
 
+        public static NetworkStatistics Statistics { get; set; }
+
         private static IThreadProcessor _processor;
         private static INetworkClient _client;
         private static IMessageContract _contract;
 
         static Network() {
             _contract = new BinaryFormatterMessageContract();
+            Statistics = new NetworkStatistics();
         }
 
         public static void BroadcastConnect() {
@@ -57,6 +60,8 @@ namespace UdpNetworking.Network{
         public static void Connect(IPAddress host) {
             if (Connected) 
                 throw new AlreadyConnectedException("Close existing connection first.");
+
+            if(Statistics.Log) Statistics.Connections++;
 
             _client = new ThreadlessUdpNetworkClient(PORT, Processor);
             HostAddress = new IPEndPoint(host, PORT);
@@ -76,15 +81,21 @@ namespace UdpNetworking.Network{
             // Recieve next transmitted data.
             _client.BeginRecieve(Recieve);
 
+            if (Statistics.Log) Statistics.TotalMessagesRecieved++;
+
             // Restore and process the sent message.
             var restoredView = _contract.UnpackForRecieve(viewBytes) as View;
             if (restoredView == null) return;
+
+            if (Statistics.Log) Statistics.ValidMessagesRecieved++;
 
             // Don't route our own messages. 
             var loopBack = Equals(restoredView.SenderAddress, LanAddress);
             if (loopBack) return;
 
             ViewRouting.Route(restoredView);
+
+            if (Statistics.Log) Statistics.ForignMessagesRecieved++;
         }
 
         /// <summary>
@@ -97,11 +108,16 @@ namespace UdpNetworking.Network{
 
             var messageBytes = _contract.PackForSend(view);
             _client.Send(messageBytes, messageBytes.Length, HostAddress);
+
+            if (Statistics.Log) Statistics.MessagesSent++;
         }
 
         public static void Disconnect() {
             if(_client == null)
                 throw new NoConnectionException("No existing connection to close.");
+
+            if (Statistics.Log) Statistics.Disconnects++;
+
             _client.Close();
             _client = null;
 #if DEBUG_LOG

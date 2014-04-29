@@ -8,37 +8,57 @@ public class SessionUnitTester : MonoBehaviour {
 
     void Start() {
         Network.Processor = MainThreadProcessor.Instance;
+        Network.Statistics.Log = true;
     }
 
     void OnGUI() {
 
-        if (GUILayout.Button("TestAsync")) {
-            var newClient = new UdpClient(21044);
-            newClient.BeginReceive(result => Debug.Log("Recieved!"), null);
-            newClient.Close();
+        //if (GUILayout.Button("TestAsync")) {
+        //    var newClient = new UdpClient(21044);
+        //    newClient.BeginReceive(result => Debug.Log("Recieved!"), null);
+        //    newClient.Close();
+        //}
+
+        if (Network.Statistics.Log) {
+            GUILayout.Label(
+                "Connected: " + (Network.Connected ? Network.HostAddress.Address.ToString() : "Disconnected") + "\n" +
+                "Connections Made: " + Network.Statistics.Connections + "\n" +
+                "Disconnects: " + Network.Statistics.Disconnects + "\n" +
+                "Messages\n"+
+                "Total Recieved: " + Network.Statistics.TotalMessagesRecieved + "\n" +
+                "Valid Recieved: " + Network.Statistics.ValidMessagesRecieved + "\n" +
+                "Forign Recieved: " + Network.Statistics.ForignMessagesRecieved + "\n" +
+                "Total Sent : " + Network.Statistics.MessagesSent
+            );
         }
 
-        if (GUILayout.Button("Announce"))
-            Session.Announce();
+        if (!Network.Connected) {
 
-        if (GUILayout.Button("Stop Announcing"))
-            Session.Stop();
+            var ip = "192.168.1.25";
+            if (GUILayout.Button("Connect (" + ip + ")"))
+                Network.Connect(IPAddress.Parse(ip));
 
-        if (GUILayout.Button("Find")) 
-            Session.Find(MatchFound);
+            if (GUILayout.Button("Find"))
+                Session.Find(MatchFound);
 
-        if (GUILayout.Button("Listen For Broadcast"))
-            Network.BroadcastConnect();
+            if (GUILayout.Button("Listen For Broadcast"))
+                Network.BroadcastConnect();
 
+            if (GUILayout.Button("Announce"))
+                Session.Announce();
 
-        if (GUILayout.Button("Connect"))
-            Network.Connect(IPAddress.Parse("192.168.1.25"));
+            if (GUILayout.Button("Stop Announcing"))
+                Session.Stop();
 
-        if(GUILayout.Button("Disconnect"))
-            Network.Disconnect(); 
+        }else {
 
-        if(GUILayout.Button("Send some other message!!"))
-            RemoteInvoke.SendMessage("RecievedMessage");
+            if (GUILayout.Button("Send some other message!!"))
+                RemoteInvoke.SendMessage("RecievedMessage");
+
+            if (GUILayout.Button("Disconnect"))
+                Network.Disconnect();
+
+        }
 
         GUILayout.Label("Recieved message?? " + _recievedMessage);
     }
