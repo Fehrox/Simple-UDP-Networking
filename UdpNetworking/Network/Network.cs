@@ -25,7 +25,7 @@ namespace UdpNetworking.Network{
     public static class Network {
 
         public static bool Connected { get {return _client != null;} }
-        public const short PORT = 21044;
+        public const short PORT = 21043;
         public static IPEndPoint HostAddress { get; set; }
         public static IPAddress LanAddress {
             get {
