@@ -43,7 +43,7 @@ namespace UdpNetworking.Client
         public void ProcessRecieve(AsyncByteCallback requestCallback, IAsyncResult result) {
             var sender = new IPEndPoint(IPAddress.Any, 0);
             var listner = (UdpClient)result.AsyncState;
-            var recievedBytes = listner.Receive(ref sender);
+            var recievedBytes = listner.EndReceive(result, ref sender);
             requestCallback.Invoke(recievedBytes);
         }
 
