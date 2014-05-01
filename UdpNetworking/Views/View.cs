@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
@@ -21,11 +22,14 @@ namespace UdpNetworking.Views
         public IPAddress SenderAddress;
 
         protected View() {
-            RegesterView(0);
+            // ViewId stays 0;
+            RegesterView();
         }
 
         protected View(ushort viewId) {
-            RegesterView(viewId);
+            ViewID = viewId;
+            UnityEngine.Debug.LogWarning("View(" + viewId + ")");
+            RegesterView();
         }
 
         /// <summary>
@@ -41,12 +45,10 @@ namespace UdpNetworking.Views
         /// routed over the network.
         /// </summary>
         /// <param name="viewId"></param>
-        private void RegesterView(ushort viewId) {
+        private void RegesterView() {
             // Only sync derived types.
-            if (GetType().IsSubclassOf(typeof(View))) {
+            if (GetType().IsSubclassOf(typeof(View)))
                 ViewRouting.RegisterView(this);
-                ViewID = viewId;
-            }
         }
 
         ~View() {
@@ -62,7 +64,11 @@ namespace UdpNetworking.Views
 
         protected View(SerializationInfo info, StreamingContext context) {
             ViewID = info.GetUInt16("ViewID");
-            SenderAddress = (IPAddress)info.GetValue("Address", typeof (IPAddress));
+            try {
+                SenderAddress = (IPAddress)info.GetValue("Address", typeof(IPAddress));
+            } catch (SerializationException) {
+                UnityEngine.Debug.Log("Recieved unmatching version of object:" + GetType());
+            }
         }
 
         public override string ToString() {

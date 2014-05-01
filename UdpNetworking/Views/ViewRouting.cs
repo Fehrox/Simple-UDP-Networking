@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace UdpNetworking.Views
@@ -7,26 +8,29 @@ namespace UdpNetworking.Views
     /// Keeps track of views in project, and routes messages 
     /// set from networked instances of views, to local ones.
     /// </summary>
-    internal static class ViewRouting
+    public static class ViewRouting
     {
-        private static readonly List<View> Views = new List<View>();
+        public static readonly List<View> Views = new List<View>();
         
         /// <summary>
         /// Sets a local view to recieve routing of network messages to its instance.
         /// </summary>
         /// <param name="view"></param>
         public static void RegisterView(View view) { 
-            var notAlreadyRegistered = Views.Where(v => v.GetType() == view.GetType())
-                                        .All(v => v.ViewID != view.ViewID);
-            if(notAlreadyRegistered)
+            var notRegistered = Views.Where(v => v.GetType() == view.GetType())
+                                     .All(v => v.ViewID != view.ViewID);
+            if (notRegistered) {
                 Views.Add(view);
+            }
         }
 
         /// <summary>
         /// Stops a local view from listening for network messages.
         /// </summary>
         /// <param name="view"></param>
-        public static void UnRegisterView(View view) { Views.Remove(view); }
+        public static void UnRegisterView(View view) {
+            Views.Remove(view);
+        }
 
         /// <summary>
         /// Directs incoming messages to the local intance of the view that sent them.

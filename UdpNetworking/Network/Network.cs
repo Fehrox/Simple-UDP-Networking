@@ -59,16 +59,13 @@ namespace UdpNetworking.Network{
 
         public static void Connect(IPAddress host) {
             if (Connected) 
-                throw new AlreadyConnectedException("Close existing connection first.");
-
-            if(Statistics.Log) Statistics.Connections++;
+                Disconnect();
 
             _client = new ThreadlessUdpNetworkClient(PORT, Processor);
             HostAddress = new IPEndPoint(host, PORT);
             _client.BeginRecieve(Recieve);
-#if DEBUG_LOG
-            UnityEngine.Debug.Log("Connected to " + HostAddress);
-#endif
+
+            if(Statistics.Log) Statistics.Connections++;
         }
 
         /// <summary>
@@ -120,6 +117,8 @@ namespace UdpNetworking.Network{
 
             _client.Close();
             _client = null;
+            HostAddress = null;
+
 #if DEBUG_LOG
             UnityEngine.Debug.Log("Disconnected from " + HostAddress);
 #endif

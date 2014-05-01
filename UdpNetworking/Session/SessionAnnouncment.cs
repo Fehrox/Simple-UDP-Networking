@@ -49,15 +49,16 @@ namespace UdpNetworking.Session
         public override void RecieveData(View recievedView) {
             var sessionAnnouncment = recievedView as SessionAnnouncment;
             bool searching = _mode == AnnounceMode.Search,
-                 recievedAnnouncment = sessionAnnouncment != null;
+                 recievedAnnouncment = sessionAnnouncment != null
+                                       && sessionAnnouncment.RemoteHostIP != null;
 
             if (searching && recievedAnnouncment) {
-                SessionFinder.OnFoundSession(sessionAnnouncment.HostID, sessionAnnouncment.RemoteHostIP);
+                Session.OnFoundSession(sessionAnnouncment.HostID, sessionAnnouncment.RemoteHostIP);
                 // Stop recieving new broadcasts till a new finder is initialized.
                 _mode = AnnounceMode.Passive;
             }
         }
-
+         
         new public void GetObjectData(SerializationInfo info, StreamingContext context) {
             base.GetObjectData(info, context);
             info.AddValue("HostID", HostID);
@@ -66,8 +67,12 @@ namespace UdpNetworking.Session
 
         protected SessionAnnouncment(SerializationInfo info, StreamingContext context)
             : base(info, context) {
-            HostID = info.GetInt32("HostID");
-            RemoteHostIP = (IPAddress)info.GetValue("HostAddress", typeof(IPAddress));
+                try {
+                    HostID = info.GetInt32("HostID");
+                    RemoteHostIP = (IPAddress)info.GetValue("HostAddress", typeof(IPAddress));
+                } catch (SerializationException) {
+                    UnityEngine.Debug.Log("Recieved unmatching version of " + GetType());
+                }
         }
     }
 }
