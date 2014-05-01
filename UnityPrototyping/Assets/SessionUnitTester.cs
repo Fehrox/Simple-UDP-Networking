@@ -21,6 +21,7 @@ public class SessionUnitTester : MonoBehaviour {
 
         if (Network.Statistics.Log) {
             GUILayout.Label(
+                "Host: " + Network.HostAddress + "\n" +
                 "Connected: " + (Network.Connected ? Network.HostAddress.Address.ToString() : "Disconnected") + "\n" +
                 "Connections Made: " + Network.Statistics.Connections + "\n" +
                 "Disconnects: " + Network.Statistics.Disconnects + "\n" +
@@ -34,7 +35,7 @@ public class SessionUnitTester : MonoBehaviour {
 
         if (!Network.Connected) {
 
-            var ip = "192.168.1.25";
+            var ip = "192.168.1.10";
             if (GUILayout.Button("Connect (" + ip + ")"))
                 Network.Connect(IPAddress.Parse(ip));
 
@@ -45,12 +46,12 @@ public class SessionUnitTester : MonoBehaviour {
                 Network.BroadcastConnect();
 
             if (GUILayout.Button("Announce"))
-                Session.Announce();
+                Session.Announce(1);
 
             if (GUILayout.Button("Stop Announcing"))
-                Session.Stop();
+                Session.StopAnnouncing();
 
-        }else {
+        } else {
 
             if (GUILayout.Button("Send some other message!!"))
                 RemoteInvoke.SendMessage("RecievedMessage");
@@ -72,7 +73,7 @@ public class SessionUnitTester : MonoBehaviour {
     void MatchFound(int networkId, IPAddress sender) {
         Debug.Log("Match found!! " + networkId + " " + sender);
         if (Network.Connected) {
-            Session.Stop();
+            Session.StopAnnouncing();
             Network.Disconnect();
         }
 
@@ -85,6 +86,7 @@ public class SessionUnitTester : MonoBehaviour {
     }
 
     void OnApplicationQuit() {
-        Network.Disconnect();
+        if(Network.Connected)
+            Network.Disconnect();
     }
 }

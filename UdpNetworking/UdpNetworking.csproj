@@ -54,20 +54,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messaging\BinaryFormatterMessageContract.cs" />
     <Compile Include="Session\Session.cs" />
-    <Compile Include="Session\SessionAnnouncer.cs" />
     <Compile Include="Session\SessionAnnouncment.cs" />
-    <Compile Include="Session\SessionFinder.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Views\ViewRouting.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Session\SessionCodeMap.dgml" />
     <None Include="UdpNetworkCodeMap.dgml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)UnityPrototyping\Assets\$(ProjectName).dll"
 copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)UnityPrototyping\Assets\$(ProjectName).pdb"
+copy /Y "$(TargetDir)$(ProjectName).dll" "D:\Projects\MMR Arcade\Assets\Plugins\UdpNetworking\$(ProjectName).dll"
+copy /Y "$(TargetDir)$(ProjectName).dll" "D:\Projects\MMR Arcade\Assets\Plugins\UdpNetworking\$(ProjectName).pdb"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

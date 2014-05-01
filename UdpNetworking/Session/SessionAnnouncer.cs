@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using System.Collections;
+using System.Runtime.Serialization;
+using UdpNetworking.Views;
+using System.Threading;
 
 namespace UdpNetworking.Session
 {
@@ -14,7 +17,7 @@ namespace UdpNetworking.Session
         private int _hostID;
 
         // How Often we should broadcase the session.
-        private const int BROADCAST_FREQUENCY = 500;
+        private const int BROADCAST_FREQUENCY = 350;
 
         public SessionAnnouncer(ref SessionAnnouncment _announcment) {
             _announcer = _announcment;
@@ -43,7 +46,7 @@ namespace UdpNetworking.Session
         /// </summary>
         private void Broadcast() {
             _broadcast = true;
-            while (_broadcast ) {
+            while (_broadcast) {
                 _announcer = new SessionAnnouncment(_hostID);
                 _announcer.Announce();
                 // Wait .35 seconds before announcing again.

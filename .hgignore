@@ -13,3 +13,5 @@ UnityPrototyping/*.orig
 UnityPrototyping/*.csproj
 UnityPrototyping/obj/
 Build/
+UnityPrototyping/_ReSharper.UnityVS.UnityPrototyping/
+_ReSharper.UdpNetworking/

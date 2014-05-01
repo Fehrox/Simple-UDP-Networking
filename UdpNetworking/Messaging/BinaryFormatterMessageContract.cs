@@ -37,7 +37,8 @@ namespace UdpNetworking.Messaging
                     e is SerializationException ||
                     e is IndexOutOfRangeException || 
                     e is ArgumentOutOfRangeException ||
-                    e is EndOfStreamException)
+                    e is EndOfStreamException || 
+                    e is OverflowException)
                     //Return nothing.
                     return null;
                 throw;
